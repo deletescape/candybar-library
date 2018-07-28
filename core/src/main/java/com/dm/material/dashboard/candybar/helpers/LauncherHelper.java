@@ -43,22 +43,23 @@ public class LauncherHelper {
     private static final int GO = 7;
     private static final int HOLO = 8;
     private static final int HOLOHD = 9;
-    private static final int LGHOME = 10;
-    private static final int LGHOME3 = 11;
-    private static final int LUCID = 12;
-    private static final int MINI = 13;
-    private static final int NEXT = 14;
-    private static final int NOVA = 15;
-    private static final int SMART = 16;
-    private static final int SOLO = 17;
-    private static final int ZENUI = 18;
-    private static final int NOUGAT = 19;
-    private static final int M = 20;
-    private static final int ZERO = 21;
-    private static final int V = 22;
-    private static final int ABC = 23;
-    private static final int EVIE = 24;
-    private static final int FLICK = 25;
+    private static final int LAWNCHAIR = 10;
+    private static final int LGHOME = 11;
+    private static final int LGHOME3 = 12;
+    private static final int LUCID = 13;
+    private static final int MINI = 14;
+    private static final int NEXT = 15;
+    private static final int NOVA = 16;
+    private static final int SMART = 17;
+    private static final int SOLO = 18;
+    private static final int ZENUI = 19;
+    private static final int NOUGAT = 20;
+    private static final int M = 21;
+    private static final int ZERO = 22;
+    private static final int V = 23;
+    private static final int ABC = 24;
+    private static final int EVIE = 25;
+    private static final int FLICK = 26;
 
     private static int getLauncherId(String packageName) {
         if (packageName == null) return UNKNOWN;
@@ -88,6 +89,10 @@ public class LauncherHelper {
                 return LGHOME;
             case "com.lge.launcher3":
                 return LGHOME3;
+            case "ch.deletescape.lawnchair":
+            case "ch.deletescape.lawnchair.plah":
+            case "ch.deletescape.lawnchair.ci":
+                return LAWNCHAIR;
             case "com.powerpoint45.launcher":
                 return LUCID;
             case "com.jiubang.go.mini.launcher":
@@ -223,6 +228,15 @@ public class LauncherHelper {
             case HOLOHD:
                 applyManual(context, launcherPackage, launcherName, "com.mobint.hololauncher.SettingsActivity");
                 break;
+            case LAWNCHAIR:
+                try {
+                    final Intent lawnchair = new Intent("ch.deletescape.lawnchair.APPLY_ICONS", null);
+                    lawnchair.putExtra("packageName", context.getPackageName());
+                    context.startActivity(lawnchair);
+                    ((AppCompatActivity) context).finish();
+                } catch (ActivityNotFoundException | NullPointerException e) {
+                    openGooglePlay(context, "ch.deletescape.lawnchair.plah", launcherName);
+                }
             case LGHOME:
                 applyLgHome(context, launcherPackage, launcherName,
                         "com.lge.launcher2.homesettings.HomeSettingsPrefActivity");
